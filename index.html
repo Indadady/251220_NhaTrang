@@ -34,14 +34,14 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Hero Background Image Setting */
+    /* Hero Background Image Setting (User Requested) */
     .hero-bg {
       background-image:
-        linear-gradient(to bottom, rgba(15, 23, 42, 0.3), rgba(15, 23, 42, 0.85)),
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.2), rgba(15, 23, 42, 0.85)),
         url('https://images.unsplash.com/photo-1565780352598-a89e4c194682?q=80&w=1920&auto=format&fit=crop');
       background-size: cover;
       background-position: center;
-      background-attachment: scroll; /* Mobile friendly */
+      background-attachment: scroll;
     }
 
     /* Tabs */
@@ -63,14 +63,14 @@
     }
 
     /* Timeline Styling */
-    .timeline-item { position: relative; padding-left: 3rem; padding-bottom: 2.5rem; }
+    .timeline-item { position: relative; padding-left: 3.5rem; padding-bottom: 2.5rem; }
     .timeline-item::before {
-      content: ''; position: absolute; left: 1.1rem; top: 2.2rem; bottom: -0.5rem;
+      content: ''; position: absolute; left: 1.35rem; top: 2.2rem; bottom: -0.5rem;
       width: 2px; background: #e2e8f0;
     }
     .timeline-item:last-child::before { display: none; }
     .timeline-dot {
-      position: absolute; left: 0.35rem; top: 0.25rem;
+      position: absolute; left: 0.6rem; top: 0.25rem;
       width: 1.6rem; height: 1.6rem;
       border-radius: 999px;
       background: white;
@@ -91,6 +91,10 @@
     /* Utilities */
     .card-shadow { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
     html { scroll-padding-top: 5rem; }
+
+    /* Video Modal */
+    #videoModal.hidden { opacity: 0; pointer-events: none; }
+    #videoModal { transition: opacity 0.3s ease; }
   </style>
 </head>
 
@@ -101,11 +105,11 @@
     <nav class="max-w-4xl mx-auto px-4">
       <div class="h-14 flex items-center justify-between">
         <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-          <!-- Tourmaker Logo -->
+          <!-- Tourmaker Logo (Must be included) -->
           <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHfgIX70O5k6Anuo0UgALIdaG9jSga9auHu3uyz0uEirylGPAJnjN_qQbvEGMUvPqUQf_g9FMNUHRxlDcUBf4vZ3Mpy4TnA9WxbmzWYK11gt2zuy_Irl4wctNFjcjLyPo0GPXV792o_J7L9guRMuDfeC1gy7USwywjYbECZgzcsHybuGRRAXAnO1eNmP8/s320/logo.png" alt="투어메이커 로고" class="h-8 w-auto hover:opacity-80 transition-opacity" />
           <div class="leading-tight">
             <p class="text-[11px] font-bold text-slate-900 tracking-tight">Smart Guidebook</p>
-            <p class="text-[10px] text-slate-500 font-medium">For Taenggu's Family</p>
+            <p class="text-[10px] text-slate-500 font-medium">Family Trip</p>
           </div>
         </div>
         <button id="shareBtn" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1.5" onclick="copyShareLink()">
@@ -117,43 +121,44 @@
 
   <main>
     <!-- Hero Section -->
-    <section class="hero-bg text-white text-center flex items-center justify-center min-h-[60vh] md:min-h-[70vh] relative overflow-hidden">
+    <section class="hero-bg text-white text-center flex items-center justify-center min-h-[55vh] md:min-h-[65vh] relative overflow-hidden">
       <!-- Decorative Overlay -->
       <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent"></div>
       
-      <div class="relative z-10 max-w-4xl mx-auto px-4 py-12 flex flex-col items-center">
-        <div class="inline-flex items-center gap-2 bg-teal-500/20 backdrop-blur-md border border-teal-400/30 px-3 py-1 rounded-full mb-6 shadow-lg">
-          <span class="text-xs font-bold text-teal-200 uppercase tracking-wider">Family Trip</span>
-          <span class="w-1 h-1 rounded-full bg-teal-200"></span>
-          <span class="text-xs font-medium text-white">12.20 - 12.26</span>
+      <div class="relative z-10 max-w-4xl mx-auto px-4 py-10 flex flex-col items-center">
+        <!-- D-Day Badge -->
+        <div class="mb-4 animate-bounce">
+            <span id="dDayBadge" class="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg border border-red-400">
+                D-5
+            </span>
         </div>
-        
-        <h1 class="text-4xl md:text-6xl font-black mb-4 leading-tight drop-shadow-2xl">
+
+        <h1 class="text-4xl md:text-6xl font-black mb-3 leading-tight drop-shadow-2xl">
           탱구네 가족의<br />
           <span class="text-teal-300">나트랑 힐링 여행</span> 🌴
         </h1>
         
-        <p class="text-sm md:text-lg text-white/80 max-w-lg mx-auto leading-relaxed mb-8">
-          3박은 시내에서 알차게,<br/>
-          2박은 리조트에서 편안하게.
+        <p class="text-sm md:text-lg text-white/80 max-w-lg mx-auto leading-relaxed mb-6">
+          12.20 - 12.26 (5박 7일)<br/>
+          시내 3박 + 리조트 2박
         </p>
 
         <!-- Key Info Grid -->
         <div class="grid grid-cols-3 gap-2 w-full max-w-md mx-auto">
             <div class="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/10 flex flex-col items-center justify-center">
-                <i class="fa-solid fa-users text-teal-300 mb-1 text-lg"></i>
+                <i class="fa-solid fa-child-reaching text-teal-300 mb-1 text-lg"></i>
                 <span class="text-[10px] text-white/60">멤버</span>
                 <span class="text-xs font-bold">성빈이네</span>
             </div>
             <div class="bg-solid bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/10 flex flex-col items-center justify-center">
-                <i class="fa-solid fa-hotel text-teal-300 mb-1 text-lg"></i>
-                <span class="text-[10px] text-white/60">숙소</span>
-                <span class="text-xs font-bold">시내+리조트</span>
+                <i class="fa-solid fa-umbrella-beach text-teal-300 mb-1 text-lg"></i>
+                <span class="text-[10px] text-white/60">컨셉</span>
+                <span class="text-xs font-bold">관광반 휴양반</span>
             </div>
             <div class="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/10 flex flex-col items-center justify-center">
-                <i class="fa-solid fa-plane text-teal-300 mb-1 text-lg"></i>
-                <span class="text-[10px] text-white/60">일정</span>
-                <span class="text-xs font-bold">5박 7일</span>
+                <i class="fa-solid fa-temperature-half text-teal-300 mb-1 text-lg"></i>
+                <span class="text-[10px] text-white/60">날씨</span>
+                <span class="text-xs font-bold">22° / 29°</span>
             </div>
         </div>
       </div>
@@ -167,7 +172,7 @@
             일정
           </button>
           <button class="tab-btn flex-1 min-w-[80px] py-3 text-sm font-bold text-slate-500 whitespace-nowrap" data-target="tab-hotels">
-            호텔
+            숙소
           </button>
           <button class="tab-btn flex-1 min-w-[80px] py-3 text-sm font-bold text-slate-500 whitespace-nowrap" data-target="tab-checklist">
             준비물
@@ -189,7 +194,7 @@
             <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
               <i class="fa-regular fa-calendar-check text-[color:var(--brand)]"></i> 상세 일정
             </h2>
-            <span class="text-xs text-slate-500 bg-white px-2 py-1 rounded border">스크롤하여 날짜 선택 ↔</span>
+            <span class="text-xs text-slate-500 bg-white px-2 py-1 rounded border">날짜 선택 ↔</span>
           </div>
 
           <!-- Day Selector -->
@@ -203,14 +208,14 @@
           </div>
 
           <!-- Honey Tip -->
-          <div class="mt-6 bg-amber-50 border border-amber-100 rounded-2xl p-5 shadow-sm">
-            <h3 class="font-bold text-amber-900 text-sm mb-3 flex items-center gap-2">
-                <i class="fa-solid fa-lightbulb text-amber-500"></i> 아이 동반 여행 꿀팁
+          <div class="mt-6 bg-yellow-50 border border-yellow-100 rounded-2xl p-5 shadow-sm">
+            <h3 class="font-bold text-yellow-800 text-sm mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-lightbulb text-yellow-500"></i> 투어메이커의 꿀팁
             </h3>
             <ul class="space-y-2 text-xs md:text-sm text-slate-700">
-                <li class="flex gap-2 items-start"><i class="fa-solid fa-check text-amber-500 mt-1"></i> <div><b>빈원더스:</b> 워터파크용 수건은 유료입니다. 호텔 비치타월을 챙기거나 개인 타월 준비 필수!</div></li>
-                <li class="flex gap-2 items-start"><i class="fa-solid fa-check text-amber-500 mt-1"></i> <div><b>그랩(Grab):</b> 이동은 무조건 그랩 호출. 기사님이 잔돈 없다고 할 수 있으니 소액권 준비하세요.</div></li>
-                <li class="flex gap-2 items-start"><i class="fa-solid fa-check text-amber-500 mt-1"></i> <div><b>물갈이:</b> 양치는 생수로, 식당 얼음은 구멍 뚫린 것(제빙기 얼음) 위주로 드세요.</div></li>
+                <li class="flex gap-2 items-start"><i class="fa-solid fa-check text-yellow-500 mt-1"></i> <div><b>빈원더스:</b> 워터파크용 개인 타월 필수! 호텔 비치타월 빌려가세요.</div></li>
+                <li class="flex gap-2 items-start"><i class="fa-solid fa-check text-yellow-500 mt-1"></i> <div><b>그랩(Grab):</b> 이동은 무조건 그랩. 잔돈이 부족할 수 있으니 소액권 준비.</div></li>
+                <li class="flex gap-2 items-start"><i class="fa-solid fa-check text-yellow-500 mt-1"></i> <div><b>물갈이 주의:</b> 양치는 생수로, 식당 얼음은 '가운데 구멍 뚫린' 제빙기 얼음만.</div></li>
             </ul>
           </div>
         </div>
@@ -220,9 +225,10 @@
           <div class="space-y-6">
             <!-- Hotel 1 -->
             <div class="bg-white rounded-2xl overflow-hidden card-shadow border border-slate-100">
-                <div class="h-32 bg-slate-200 relative">
-                    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/254926581.jpg?k=3a65037597148873752763266986507455855074360565899905207865268481&o=&hp=1" alt="레갈리아 골드" class="w-full h-full object-cover">
-                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 pt-10">
+                <div class="h-32 bg-slate-200 relative group">
+                    <!-- Image updated as per user request -->
+                    <img src="https://tse4.mm.bing.net/th/id/OIP.guebFjtIEj9uw8fcCl-B6gHaFj?cb=ucfimg2&ucfimg=1&w=474&h=379&c=7&p=0" alt="레갈리아 골드" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 pt-10">
                         <span class="bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded">1~3일차 (3박)</span>
                         <h3 class="text-white font-bold text-lg mt-1">레갈리아 골드 호텔</h3>
                     </div>
@@ -247,9 +253,10 @@
 
             <!-- Hotel 2 -->
             <div class="bg-white rounded-2xl overflow-hidden card-shadow border border-slate-100">
-                <div class="h-32 bg-slate-200 relative">
-                    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/49841870.jpg?k=f806939634560731057476686161477757655099309855365557766558005398&o=&hp=1" alt="아미아나 리조트" class="w-full h-full object-cover">
-                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 pt-10">
+                <div class="h-32 bg-slate-200 relative group">
+                    <!-- Image updated as per user request -->
+                    <img src="https://tse2.mm.bing.net/th/id/OIP.G8D88PDmhOCiky30vbNNkgHaFj?cb=ucfimg2&ucfimg=1&w=474&h=379&c=7&p=0" alt="아미아나 리조트" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 pt-10">
                         <span class="bg-teal-600 text-white text-[10px] font-bold px-2 py-1 rounded">4~5일차 (2박)</span>
                         <h3 class="text-white font-bold text-lg mt-1">아미아나 리조트 (깜란)</h3>
                     </div>
@@ -265,8 +272,8 @@
                             <p class="font-bold">12/25 (수)</p>
                         </div>
                     </div>
-                    <div class="text-xs text-slate-600 bg-teal-50 p-3 rounded-lg mb-4">
-                        <span class="font-bold text-teal-700">📌 포함사항:</span> 조식 + 석식 포함 (예약서 기준)<br/>
+                    <div class="text-xs text-slate-600 bg-teal-50 p-3 rounded-lg mb-4 leading-relaxed">
+                        <span class="font-bold text-teal-700">📌 예약사항:</span> 조식 + 석식 포함<br/>
                         <span class="font-bold text-teal-700">📌 아이 동반:</span> 예약서에 아동 0명이니 체크인 시 말해주세요.
                     </div>
                     <div class="flex gap-2">
@@ -303,7 +310,7 @@
         <div id="tab-contacts" class="tab-panel hidden animate-fade-in">
             <div class="bg-white rounded-2xl p-6 border border-slate-100 card-shadow text-center mb-4">
                 <p class="text-xs font-bold text-slate-400 mb-2">EMERGENCY CONTACT</p>
-                <div class="w-20 h-20 bg-slate-100 rounded-full mx-auto mb-3 flex items-center justify-center text-3xl">👨🏻</div>
+                <div class="w-20 h-20 bg-slate-100 rounded-full mx-auto mb-3 flex items-center justify-center text-3xl shadow-sm">👨🏻</div>
                 <h3 class="text-xl font-bold text-slate-900">남편 탱구</h3>
                 <p class="text-slate-500 text-sm mb-4">010-9443-7881</p>
                 <a href="tel:01094437881" class="block w-full bg-red-50 text-red-600 font-bold py-3 rounded-xl hover:bg-red-100 transition">
@@ -353,6 +360,16 @@
         </div>
     </footer>
 
+    <!-- Video Modal -->
+    <div id="videoModal" class="fixed inset-0 z-[60] bg-black/80 flex items-center justify-center hidden p-4">
+        <div class="w-full max-w-3xl bg-black rounded-xl overflow-hidden shadow-2xl relative">
+            <button onclick="closeVideo()" class="absolute top-2 right-2 text-white bg-black/50 rounded-full w-8 h-8 flex items-center justify-center z-10 hover:bg-black/80"><i class="fa-solid fa-xmark"></i></button>
+            <div class="relative pt-[56.25%]">
+                <iframe id="videoFrame" class="absolute top-0 left-0 w-full h-full" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast Message -->
     <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-4 py-2 rounded-full text-sm shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 z-50">
         클립보드에 복사되었습니다!
@@ -384,7 +401,12 @@
                 { time: "이동", title: "케이블카/보트", desc: "섬으로 이동 (오픈런 추천)", icon: "fa-ship" },
                 { time: "오전", title: "사파리 & 동물원", desc: "성빈이 취향저격 동물 구경", icon: "fa-hippo" },
                 { time: "오후", title: "워터파크", desc: "유수풀, 파도풀 (수영복 지참)", icon: "fa-water" }
-            ]
+            ],
+            // Video Curation Idea (YouTube)
+            video: {
+                id: "27y80X_k_8k", // VinWonders Nha Trang Official
+                label: "🎬 빈원더스 미리보기 (영상)"
+            }
         },
         {
             day: "D4", date: "12/23 (월)", title: "머드온천 & 리조트 이동",
@@ -428,9 +450,23 @@
         renderChecklist();
         loadMemo();
         setupTabs();
+        calcDday("2025-12-20");
     });
 
-    // 2. Tabs System
+    // 2. D-Day Calculator
+    function calcDday(targetDate) {
+        const today = new Date();
+        const dday = new Date(targetDate);
+        const gap = dday.getTime() - today.getTime();
+        const result = Math.ceil(gap / (1000 * 60 * 60 * 24));
+        
+        const badge = document.getElementById('dDayBadge');
+        if(result > 0) badge.innerText = `D-${result} 설렘가득!`;
+        else if(result === 0) badge.innerText = `D-Day 여행시작!`;
+        else badge.innerText = `여행 ${Math.abs(result)+1}일차`;
+    }
+
+    // 3. Tabs System
     function setupTabs() {
         const tabs = document.querySelectorAll('.tab-btn');
         const panels = document.querySelectorAll('.tab-panel');
@@ -454,7 +490,7 @@
         });
     }
 
-    // 3. Itinerary Rendering
+    // 4. Itinerary Rendering
     function renderDayButtons() {
         const container = document.getElementById('dayButtonsContainer');
         container.innerHTML = tripData.map((day, index) => `
@@ -495,10 +531,21 @@
             </div>
         `).join('');
 
+        // Add Video Button if exists
+        let videoBtn = '';
+        if(data.video) {
+            videoBtn = `
+                <button onclick="openVideo('${data.video.id}')" class="w-full mt-2 mb-4 flex items-center justify-center gap-2 bg-slate-800 text-white py-3 rounded-xl font-bold shadow-md hover:bg-slate-700 transition">
+                    ${data.video.label} <i class="fa-brands fa-youtube text-red-500"></i>
+                </button>
+            `;
+        }
+
         container.innerHTML = `
-            <div class="mb-5 px-1">
+            <div class="mb-5 px-1 animate-fade-in">
                 <h3 class="text-lg font-black text-slate-800">${data.day} <span class="text-teal-600 font-medium ml-2 text-sm">${data.date}</span></h3>
                 <p class="text-slate-500 text-sm mt-1">"${data.title}"</p>
+                ${videoBtn}
             </div>
             <div class="pl-2">
                 ${itemsHtml}
@@ -506,7 +553,7 @@
         `;
     }
 
-    // 4. Checklist System
+    // 5. Checklist System
     function renderChecklist() {
         const container = document.getElementById('checklistContainer');
         const saved = JSON.parse(localStorage.getItem('taenggu_checklist') || '{}');
@@ -582,7 +629,7 @@
         }
     }
 
-    // 5. Memo System
+    // 6. Memo System
     const memoArea = document.getElementById('userMemo');
     function loadMemo() {
         memoArea.value = localStorage.getItem('taenggu_memo') || '';
@@ -591,7 +638,31 @@
         });
     }
 
-    // 6. Share Function
+    // 7. Video Modal Logic
+    function openVideo(videoId) {
+        const modal = document.getElementById('videoModal');
+        const frame = document.getElementById('videoFrame');
+        // Autoplay enabled
+        frame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        modal.classList.remove('hidden');
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeVideo() {
+        const modal = document.getElementById('videoModal');
+        const frame = document.getElementById('videoFrame');
+        frame.src = '';
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close modal on outside click
+    document.getElementById('videoModal').addEventListener('click', (e) => {
+        if(e.target === document.getElementById('videoModal')) closeVideo();
+    });
+
+    // 8. Share Function
     function copyShareLink() {
         const url = window.location.href;
         navigator.clipboard.writeText(url).then(() => {
