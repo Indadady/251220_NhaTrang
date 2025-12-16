@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>탱구네 가족의 나트랑 힐링 여행 🌴 | Smart Guidebook</title>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="탱구네 가족의 나트랑 힐링 여행 🌴" />
+  <meta property="og:description" content="12/20~12/26 (5박 7일) | 시내 3박 + 리조트 2박" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1565780352598-a89e4c194682?auto=format&fit=crop&w=1200&q=80" />
+
+  <!-- Tailwind / Fonts / Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --brand: #009688;
+      --brand-dark: #00796B;
+      --brand-soft: rgba(0, 150, 136, .12);
+      --ink: #0f172a;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #f8fafc;
+      color: #334155;
+      word-break: keep-all;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Hero Background Image Setting */
+    .hero-bg {
+      background-image:
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.3), rgba(15, 23, 42, 0.85)),
+        url('https://images.unsplash.com/photo-1565780352598-a89e4c194682?q=80&w=1920&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      background-attachment: scroll; /* Mobile friendly */
+    }
+
+    /* Tabs */
+    .tab-btn { transition: all .25s ease; border-bottom: 2px solid transparent; }
+    .tab-btn.active {
+      color: var(--brand-dark);
+      border-color: var(--brand-dark);
+      background-color: #f0fdfa; /* Teal-50 */
+    }
+
+    /* Day Buttons */
+    .day-btn { transition: all .2s ease; min-width: 4rem; }
+    .day-btn.active {
+      background: var(--brand-dark);
+      color: white;
+      border-color: var(--brand-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 121, 107, 0.3);
+    }
+
+    /* Timeline Styling */
+    .timeline-item { position: relative; padding-left: 3rem; padding-bottom: 2.5rem; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: 1.1rem; top: 2.2rem; bottom: -0.5rem;
+      width: 2px; background: #e2e8f0;
+    }
+    .timeline-item:last-child::before { display: none; }
+    .timeline-dot {
+      position: absolute; left: 0.35rem; top: 0.25rem;
+      width: 1.6rem; height: 1.6rem;
+      border-radius: 999px;
+      background: white;
+      border: 2px solid var(--brand);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 10;
+      font-size: 0.75rem; color: var(--brand-dark);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    /* Checklist Animation */
+    .check-item { transition: all 0.2s; }
+    .check-item.checked { opacity: 0.6; text-decoration: line-through; background-color: #f1f5f9; }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Utilities */
+    .card-shadow { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+    html { scroll-padding-top: 5rem; }
+  </style>
+</head>
+
+<body class="antialiased">
+
+  <!-- Header -->
+  <header class="bg-white/95 backdrop-blur-md border-b border-slate-100 sticky top-0 z-50 transition-all duration-300" id="mainHeader">
+    <nav class="max-w-4xl mx-auto px-4">
+      <div class="h-14 flex items-center justify-between">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+          <!-- Tourmaker Logo -->
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHfgIX70O5k6Anuo0UgALIdaG9jSga9auHu3uyz0uEirylGPAJnjN_qQbvEGMUvPqUQf_g9FMNUHRxlDcUBf4vZ3Mpy4TnA9WxbmzWYK11gt2zuy_Irl4wctNFjcjLyPo0GPXV792o_J7L9guRMuDfeC1gy7USwywjYbECZgzcsHybuGRRAXAnO1eNmP8/s320/logo.png" alt="투어메이커 로고" class="h-8 w-auto hover:opacity-80 transition-opacity" />
+          <div class="leading-tight">
+            <p class="text-[11px] font-bold text-slate-900 tracking-tight">Smart Guidebook</p>
+            <p class="text-[10px] text-slate-500 font-medium">For Taenggu's Family</p>
+          </div>
+        </div>
+        <button id="shareBtn" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1.5" onclick="copyShareLink()">
+          <i class="fa-solid fa-share-nodes"></i> 공유
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-bg text-white text-center flex items-center justify-center min-h-[60vh] md:min-h-[70vh] relative overflow-hidden">
+      <!-- Decorative Overlay -->
+      <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent"></div>
+      
+      <div class="relative z-10 max-w-4xl mx-auto px-4 py-12 flex flex-col items-center">
+        <div class="inline-flex items-center gap-2 bg-teal-500/20 backdrop-blur-md border border-teal-400/30 px-3 py-1 rounded-full mb-6 shadow-lg">
+          <span class="text-xs font-bold text-teal-200 uppercase tracking-wider">Family Trip</span>
+          <span class="w-1 h-1 rounded-full bg-teal-200"></span>
+          <span class="text-xs font-medium text-white">12.20 - 12.26</span>
+        </div>
+        
+        <h1 class="text-4xl md:text-6xl font-black mb-4 leading-tight drop-shadow-2xl">
+          탱구네 가족의<br />
+          <span class="text-teal-300">나트랑 힐링 여행</span> 🌴
+        </h1>
+        
+        <p class="text-sm md:text-lg text-white/80 max-w-lg mx-auto leading-relaxed mb-8">
+          3박은 시내에서 알차게,<br/>
+          2박은 리조트에서 편안하게.
+        </p>
+
+        <!-- Key Info Grid -->
+        <div class="grid grid-cols-3 gap-2 w-full max-w-md mx-auto">
+            <div class="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/10 flex flex-col items-center justify-center">
+                <i class="fa-solid fa-users text-teal-300 mb-1 text-lg"></i>
+                <span class="text-[10px] text-white/60">멤버</span>
+                <span class="text-xs font-bold">성빈이네</span>
+            </div>
+            <div class="bg-solid bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/10 flex flex-col items-center justify-center">
+                <i class="fa-solid fa-hotel text-teal-300 mb-1 text-lg"></i>
+                <span class="text-[10px] text-white/60">숙소</span>
+                <span class="text-xs font-bold">시내+리조트</span>
+            </div>
+            <div class="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/10 flex flex-col items-center justify-center">
+                <i class="fa-solid fa-plane text-teal-300 mb-1 text-lg"></i>
+                <span class="text-[10px] text-white/60">일정</span>
+                <span class="text-xs font-bold">5박 7일</span>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <section class="bg-white sticky top-14 z-40 border-b border-slate-200 shadow-sm">
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="flex overflow-x-auto no-scrollbar" id="mainTabs">
+          <button class="tab-btn active flex-1 min-w-[80px] py-3 text-sm font-bold text-slate-500 whitespace-nowrap" data-target="tab-itinerary">
+            일정
+          </button>
+          <button class="tab-btn flex-1 min-w-[80px] py-3 text-sm font-bold text-slate-500 whitespace-nowrap" data-target="tab-hotels">
+            호텔
+          </button>
+          <button class="tab-btn flex-1 min-w-[80px] py-3 text-sm font-bold text-slate-500 whitespace-nowrap" data-target="tab-checklist">
+            준비물
+          </button>
+          <button class="tab-btn flex-1 min-w-[80px] py-3 text-sm font-bold text-slate-500 whitespace-nowrap" data-target="tab-contacts">
+            연락처
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Area -->
+    <section class="py-6 bg-slate-50 min-h-screen">
+      <div class="max-w-4xl mx-auto px-4">
+
+        <!-- TAB 1: ITINERARY -->
+        <div id="tab-itinerary" class="tab-panel animate-fade-in">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+              <i class="fa-regular fa-calendar-check text-[color:var(--brand)]"></i> 상세 일정
+            </h2>
+            <span class="text-xs text-slate-500 bg-white px-2 py-1 rounded border">스크롤하여 날짜 선택 ↔</span>
+          </div>
+
+          <!-- Day Selector -->
+          <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2 mb-4" id="dayButtonsContainer">
+            <!-- JS Injected -->
+          </div>
+
+          <!-- Timeline Content -->
+          <div id="dayContentContainer" class="transition-all duration-300">
+            <!-- JS Injected -->
+          </div>
+
+          <!-- Honey Tip -->
+          <div class="mt-6 bg-amber-50 border border-amber-100 rounded-2xl p-5 shadow-sm">
+            <h3 class="font-bold text-amber-900 text-sm mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-lightbulb text-amber-500"></i> 아이 동반 여행 꿀팁
+            </h3>
+            <ul class="space-y-2 text-xs md:text-sm text-slate-700">
+                <li class="flex gap-2 items-start"><i class="fa-solid fa-check text-amber-500 mt-1"></i> <div><b>빈원더스:</b> 워터파크용 수건은 유료입니다. 호텔 비치타월을 챙기거나 개인 타월 준비 필수!</div></li>
+                <li class="flex gap-2 items-start"><i class="fa-solid fa-check text-amber-500 mt-1"></i> <div><b>그랩(Grab):</b> 이동은 무조건 그랩 호출. 기사님이 잔돈 없다고 할 수 있으니 소액권 준비하세요.</div></li>
+                <li class="flex gap-2 items-start"><i class="fa-solid fa-check text-amber-500 mt-1"></i> <div><b>물갈이:</b> 양치는 생수로, 식당 얼음은 구멍 뚫린 것(제빙기 얼음) 위주로 드세요.</div></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- TAB 2: HOTELS -->
+        <div id="tab-hotels" class="tab-panel hidden animate-fade-in">
+          <div class="space-y-6">
+            <!-- Hotel 1 -->
+            <div class="bg-white rounded-2xl overflow-hidden card-shadow border border-slate-100">
+                <div class="h-32 bg-slate-200 relative">
+                    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/254926581.jpg?k=3a65037597148873752763266986507455855074360565899905207865268481&o=&hp=1" alt="레갈리아 골드" class="w-full h-full object-cover">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 pt-10">
+                        <span class="bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded">1~3일차 (3박)</span>
+                        <h3 class="text-white font-bold text-lg mt-1">레갈리아 골드 호텔</h3>
+                    </div>
+                </div>
+                <div class="p-5">
+                    <div class="grid grid-cols-2 gap-3 text-sm mb-4">
+                        <div class="bg-slate-50 p-2 rounded-lg text-center">
+                            <p class="text-xs text-slate-500">체크인</p>
+                            <p class="font-bold">12/20 (금)</p>
+                        </div>
+                        <div class="bg-slate-50 p-2 rounded-lg text-center">
+                            <p class="text-xs text-slate-500">체크아웃</p>
+                            <p class="font-bold">12/23 (월)</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Kh%C3%A1ch%20S%E1%BA%A1n%20Regalia%20Gold%20Nha%20Trang" target="_blank" class="flex-1 btn-secondary text-center py-2.5 rounded-xl text-sm font-bold border border-slate-200 hover:bg-slate-50"><i class="fa-solid fa-map-location-dot mr-1"></i> 지도</a>
+                        <a href="tel:+842583599999" class="flex-1 btn-primary text-center py-2.5 rounded-xl text-sm font-bold bg-teal-600 text-white hover:bg-teal-700"><i class="fa-solid fa-phone mr-1"></i> 전화</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hotel 2 -->
+            <div class="bg-white rounded-2xl overflow-hidden card-shadow border border-slate-100">
+                <div class="h-32 bg-slate-200 relative">
+                    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/49841870.jpg?k=f806939634560731057476686161477757655099309855365557766558005398&o=&hp=1" alt="아미아나 리조트" class="w-full h-full object-cover">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 pt-10">
+                        <span class="bg-teal-600 text-white text-[10px] font-bold px-2 py-1 rounded">4~5일차 (2박)</span>
+                        <h3 class="text-white font-bold text-lg mt-1">아미아나 리조트 (깜란)</h3>
+                    </div>
+                </div>
+                <div class="p-5">
+                    <div class="grid grid-cols-2 gap-3 text-sm mb-4">
+                        <div class="bg-slate-50 p-2 rounded-lg text-center">
+                            <p class="text-xs text-slate-500">체크인</p>
+                            <p class="font-bold">12/23 (월)</p>
+                        </div>
+                        <div class="bg-slate-50 p-2 rounded-lg text-center">
+                            <p class="text-xs text-slate-500">체크아웃</p>
+                            <p class="font-bold">12/25 (수)</p>
+                        </div>
+                    </div>
+                    <div class="text-xs text-slate-600 bg-teal-50 p-3 rounded-lg mb-4">
+                        <span class="font-bold text-teal-700">📌 포함사항:</span> 조식 + 석식 포함 (예약서 기준)<br/>
+                        <span class="font-bold text-teal-700">📌 아이 동반:</span> 예약서에 아동 0명이니 체크인 시 말해주세요.
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Khu%20nghi%20d%C6%B0%E1%BB%A1ng%20Amiana%20Cam%20Ranh" target="_blank" class="flex-1 btn-secondary text-center py-2.5 rounded-xl text-sm font-bold border border-slate-200 hover:bg-slate-50"><i class="fa-solid fa-map-location-dot mr-1"></i> 지도</a>
+                        <a href="tel:+842583993333" class="flex-1 btn-primary text-center py-2.5 rounded-xl text-sm font-bold bg-teal-600 text-white hover:bg-teal-700"><i class="fa-solid fa-phone mr-1"></i> 전화</a>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: CHECKLIST -->
+        <div id="tab-checklist" class="tab-panel hidden animate-fade-in">
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sticky top-28 z-30">
+             <div class="flex justify-between items-center mb-2">
+                 <h2 class="font-bold text-slate-800">준비물 체크</h2>
+                 <span class="text-xs font-bold text-teal-600" id="progressText">0% 완료</span>
+             </div>
+             <div class="w-full bg-slate-100 rounded-full h-2.5 mb-4">
+                <div id="progressBar" class="bg-teal-500 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+             </div>
+             <div class="flex gap-2">
+                 <button onclick="resetChecklist()" class="text-xs bg-slate-100 text-slate-600 px-3 py-2 rounded-lg flex-1"><i class="fa-solid fa-rotate-right"></i> 초기화</button>
+                 <button onclick="checkAll()" class="text-xs bg-teal-50 text-teal-700 px-3 py-2 rounded-lg flex-1 font-bold"><i class="fa-solid fa-check-double"></i> 모두 체크</button>
+             </div>
+          </div>
+
+          <div id="checklistContainer" class="mt-4 space-y-4 pb-10">
+              <!-- JS Injected -->
+          </div>
+        </div>
+
+        <!-- TAB 4: CONTACTS -->
+        <div id="tab-contacts" class="tab-panel hidden animate-fade-in">
+            <div class="bg-white rounded-2xl p-6 border border-slate-100 card-shadow text-center mb-4">
+                <p class="text-xs font-bold text-slate-400 mb-2">EMERGENCY CONTACT</p>
+                <div class="w-20 h-20 bg-slate-100 rounded-full mx-auto mb-3 flex items-center justify-center text-3xl">👨🏻</div>
+                <h3 class="text-xl font-bold text-slate-900">남편 탱구</h3>
+                <p class="text-slate-500 text-sm mb-4">010-9443-7881</p>
+                <a href="tel:01094437881" class="block w-full bg-red-50 text-red-600 font-bold py-3 rounded-xl hover:bg-red-100 transition">
+                    <i class="fa-solid fa-phone-volume mr-2"></i> 긴급 통화
+                </a>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="grid grid-cols-2 gap-3 mb-6">
+                <a href="https://www.google.com/maps/search/?api=1&query=Lotte%20Mart%20Nha%20Trang" target="_blank" class="bg-white p-4 rounded-xl border border-slate-100 text-center hover:bg-slate-50 transition">
+                    <i class="fa-solid fa-cart-shopping text-2xl text-red-500 mb-2"></i>
+                    <p class="text-xs font-bold">롯데마트</p>
+                </a>
+                <a href="https://www.google.com/maps/search/?api=1&query=VinWonders%20Nha%20Trang" target="_blank" class="bg-white p-4 rounded-xl border border-slate-100 text-center hover:bg-slate-50 transition">
+                    <i class="fa-brands fa-fort-awesome text-2xl text-purple-500 mb-2"></i>
+                    <p class="text-xs font-bold">빈원더스</p>
+                </a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Kim%20Chung%20Jewelry" target="_blank" class="bg-white p-4 rounded-xl border border-slate-100 text-center hover:bg-slate-50 transition">
+                    <i class="fa-solid fa-money-bill-transfer text-2xl text-green-500 mb-2"></i>
+                    <p class="text-xs font-bold">환전(김청)</p>
+                </a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Cong%20Caphe%20Nha%20Trang" target="_blank" class="bg-white p-4 rounded-xl border border-slate-100 text-center hover:bg-slate-50 transition">
+                    <i class="fa-solid fa-mug-hot text-2xl text-amber-700 mb-2"></i>
+                    <p class="text-xs font-bold">콩카페</p>
+                </a>
+            </div>
+
+            <!-- Memo -->
+            <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
+                <h3 class="font-bold text-slate-800 mb-2"><i class="fa-solid fa-pen-nib text-teal-600 mr-2"></i>나만의 메모</h3>
+                <textarea id="userMemo" class="w-full h-32 bg-yellow-50 rounded-xl p-3 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-yellow-200 resize-none" placeholder="택시비, 마사지 예약시간 등을 적어두세요."></textarea>
+            </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-12 mt-auto">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-2 mb-4 opacity-80">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHfgIX70O5k6Anuo0UgALIdaG9jSga9auHu3uyz0uEirylGPAJnjN_qQbvEGMUvPqUQf_g9FMNUHRxlDcUBf4vZ3Mpy4TnA9WxbmzWYK11gt2zuy_Irl4wctNFjcjLyPo0GPXV792o_J7L9guRMuDfeC1gy7USwywjYbECZgzcsHybuGRRAXAnO1eNmP8/s320/logo.png" alt="Logo" class="h-6 w-auto grayscale brightness-200">
+                <span class="text-sm font-bold tracking-widest">TOURMAKER</span>
+            </div>
+            <p class="text-xs text-slate-500">© 2025 Taenggu's Family Trip. All rights reserved.</p>
+            <p class="text-[10px] text-slate-600 mt-2">이 페이지는 투어메이커 스마트 가이드북 기술로 제작되었습니다.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Message -->
+    <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-4 py-2 rounded-full text-sm shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 z-50">
+        클립보드에 복사되었습니다!
+    </div>
+  </main>
+
+  <script>
+    // --- Data ---
+    const tripData = [
+        {
+            day: "D1", date: "12/20 (금)", title: "나트랑 도착 & 적응",
+            items: [
+                { time: "출발", title: "인천공항 출발", desc: "여권, 아이 간식, 유모차 챙기기", icon: "fa-plane-departure" },
+                { time: "도착", title: "나트랑 깜란 공항", desc: "입국심사 → 짐 찾기 → 그랩/픽업차량", icon: "fa-plane-arrival" },
+                { time: "숙소", title: "레갈리아 골드 체크인", desc: "시내 중심, 짐 풀고 가볍게 편의점", icon: "fa-hotel" }
+            ]
+        },
+        {
+            day: "D2", date: "12/21 (토)", title: "시내 탐방 & 쇼핑",
+            items: [
+                { time: "오전", title: "환전 & 쌀국수", desc: "김청/김빈 환전 → 현지 쌀국수 맛집", icon: "fa-money-bill-wave" },
+                { time: "오후", title: "롯데마트 쇼핑", desc: "물, 맥주, 기념품, 아이 간식 대량 구매", icon: "fa-cart-shopping" },
+                { time: "휴식", title: "콩카페", desc: "코코넛 스무디 커피 & 휴식", icon: "fa-coffee" }
+            ]
+        },
+        {
+            day: "D3", date: "12/22 (일)", title: "빈원더스 데이",
+            items: [
+                { time: "이동", title: "케이블카/보트", desc: "섬으로 이동 (오픈런 추천)", icon: "fa-ship" },
+                { time: "오전", title: "사파리 & 동물원", desc: "성빈이 취향저격 동물 구경", icon: "fa-hippo" },
+                { time: "오후", title: "워터파크", desc: "유수풀, 파도풀 (수영복 지참)", icon: "fa-water" }
+            ]
+        },
+        {
+            day: "D4", date: "12/23 (월)", title: "머드온천 & 리조트 이동",
+            items: [
+                { time: "11:00", title: "레갈리아 체크아웃", desc: "짐 보관 후 이동", icon: "fa-suitcase" },
+                { time: "오후", title: "아이리조트 머드온천", desc: "따뜻한 머드 스파 & 물놀이", icon: "fa-hot-tub-person" },
+                { time: "15:00", title: "아미아나 리조트 체크인", desc: "깜란 지역 이동, 휴양 시작!", icon: "fa-umbrella-beach" }
+            ]
+        },
+        {
+            day: "D5", date: "12/24 (화)", title: "리조트 콕 (크리스마스 이브)",
+            items: [
+                { time: "전일", title: "수영장 & 프라이빗 비치", desc: "모래놀이, 스노클링 맛보기", icon: "fa-person-swimming" },
+                { time: "키즈", title: "키즈클럽 프로그램", desc: "시간표 확인 후 참여", icon: "fa-shapes" },
+                { time: "저녁", title: "리조트 디너", desc: "이브 기념 여유로운 식사", icon: "fa-utensils" }
+            ]
+        },
+        {
+            day: "D6", date: "12/25 (수)", title: "체크아웃 & 귀국 준비",
+            items: [
+                { time: "오전", title: "조식 & 마지막 수영", desc: "아쉬움 달래기", icon: "fa-mug-saucer" },
+                { time: "12:00", title: "체크아웃", desc: "짐 맡기고 시내 마사지 or 공항 샌딩", icon: "fa-right-from-bracket" },
+                { time: "저녁", title: "공항 이동", desc: "출국 심사 (사람 많음 주의)", icon: "fa-passport" }
+            ]
+        }
+    ];
+
+    const checklistData = {
+        "필수": ["여권 (유효기간 6개월↑)", "항공권 E-ticket", "호텔 바우처 (캡처)", "지갑/현금(달러)/카드", "유심/이심"],
+        "아이용품": ["비상약 (해열제/밴드)", "수영복/래쉬가드 (2벌)", "튜브/암링", "선크림/모자/선글라스", "얇은 겉옷 (에어컨 대비)", "장난감/스티커북 (기내용)"],
+        "기타": ["샤워기 필터 (필수!)", "충전기/보조배터리", "물티슈/휴지", "휴대용 선풍기"]
+    };
+
+    // --- Logic ---
+    let currentDayIndex = 0;
+
+    // 1. Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        renderDayButtons();
+        renderTimeline(0);
+        renderChecklist();
+        loadMemo();
+        setupTabs();
+    });
+
+    // 2. Tabs System
+    function setupTabs() {
+        const tabs = document.querySelectorAll('.tab-btn');
+        const panels = document.querySelectorAll('.tab-panel');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // UI Toggle
+                tabs.forEach(t => t.classList.remove('active', 'text-[color:var(--brand-dark)]', 'border-b-2'));
+                tab.classList.add('active', 'text-[color:var(--brand-dark)]', 'border-b-2');
+                
+                // Panel Toggle
+                const targetId = tab.getAttribute('data-target');
+                panels.forEach(p => {
+                    p.classList.add('hidden');
+                    if(p.id === targetId) p.classList.remove('hidden');
+                });
+
+                // Scroll to top of content a bit
+                window.scrollTo({ top: 400, behavior: 'smooth' });
+            });
+        });
+    }
+
+    // 3. Itinerary Rendering
+    function renderDayButtons() {
+        const container = document.getElementById('dayButtonsContainer');
+        container.innerHTML = tripData.map((day, index) => `
+            <button onclick="renderTimeline(${index})" 
+                class="day-btn flex flex-col items-center justify-center py-2 px-4 rounded-xl border border-slate-200 bg-white text-slate-500 ${index === 0 ? 'active' : ''}"
+                id="dayBtn-${index}">
+                <span class="text-xs font-bold">${day.day}</span>
+                <span class="text-[10px] whitespace-nowrap">${day.date.split(' ')[0]}</span>
+            </button>
+        `).join('');
+    }
+
+    function renderTimeline(index) {
+        currentDayIndex = index;
+        
+        // Update Buttons UI
+        document.querySelectorAll('.day-btn').forEach((btn, idx) => {
+            if(idx === index) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+
+        // Update Content
+        const data = tripData[index];
+        const container = document.getElementById('dayContentContainer');
+        
+        const itemsHtml = data.items.map(item => `
+            <div class="timeline-item">
+                <div class="timeline-dot">
+                    <i class="fa-solid ${item.icon} text-[10px]"></i>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                    <div class="flex justify-between items-start mb-1">
+                        <h4 class="font-bold text-slate-800 text-base">${item.title}</h4>
+                        <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">${item.time}</span>
+                    </div>
+                    <p class="text-sm text-slate-500 leading-relaxed">${item.desc}</p>
+                </div>
+            </div>
+        `).join('');
+
+        container.innerHTML = `
+            <div class="mb-5 px-1">
+                <h3 class="text-lg font-black text-slate-800">${data.day} <span class="text-teal-600 font-medium ml-2 text-sm">${data.date}</span></h3>
+                <p class="text-slate-500 text-sm mt-1">"${data.title}"</p>
+            </div>
+            <div class="pl-2">
+                ${itemsHtml}
+            </div>
+        `;
+    }
+
+    // 4. Checklist System
+    function renderChecklist() {
+        const container = document.getElementById('checklistContainer');
+        const saved = JSON.parse(localStorage.getItem('taenggu_checklist') || '{}');
+        let total = 0;
+        let checked = 0;
+
+        let html = '';
+        for(const [category, items] of Object.entries(checklistData)) {
+            html += `<h4 class="font-bold text-slate-800 mb-2 px-1 border-l-4 border-teal-500 pl-2 mt-4 first:mt-0">${category}</h4>`;
+            html += `<div class="bg-white rounded-xl border border-slate-100 divide-y divide-slate-50">`;
+            
+            items.forEach(item => {
+                total++;
+                const isChecked = saved[item] ? 'checked' : '';
+                if(isChecked) checked++;
+                
+                html += `
+                    <div class="check-item flex items-center p-3 cursor-pointer ${isChecked}" onclick="toggleCheck(this, '${item}')">
+                        <div class="w-5 h-5 rounded border ${isChecked ? 'bg-teal-500 border-teal-500' : 'border-slate-300'} flex items-center justify-center mr-3 transition-colors">
+                            ${isChecked ? '<i class="fa-solid fa-check text-white text-xs"></i>' : ''}
+                        </div>
+                        <span class="text-sm text-slate-700 select-none flex-1">${item}</span>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+        }
+        container.innerHTML = html;
+        updateProgress(checked, total);
+    }
+
+    function toggleCheck(el, item) {
+        const saved = JSON.parse(localStorage.getItem('taenggu_checklist') || '{}');
+        
+        if (saved[item]) {
+            delete saved[item];
+            el.classList.remove('checked');
+            el.querySelector('div').className = "w-5 h-5 rounded border border-slate-300 flex items-center justify-center mr-3 transition-colors";
+            el.querySelector('div').innerHTML = "";
+        } else {
+            saved[item] = true;
+            el.classList.add('checked');
+            el.querySelector('div').className = "w-5 h-5 rounded border bg-teal-500 border-teal-500 flex items-center justify-center mr-3 transition-colors";
+            el.querySelector('div').innerHTML = '<i class="fa-solid fa-check text-white text-xs"></i>';
+        }
+        localStorage.setItem('taenggu_checklist', JSON.stringify(saved));
+        
+        // Recalculate progress
+        const total = document.querySelectorAll('.check-item').length;
+        const checked = Object.keys(saved).length;
+        updateProgress(checked, total);
+    }
+
+    function updateProgress(checked, total) {
+        const percent = Math.round((checked / total) * 100);
+        document.getElementById('progressBar').style.width = `${percent}%`;
+        document.getElementById('progressText').innerText = `${percent}% 완료`;
+    }
+
+    function checkAll() {
+        const saved = {};
+        for(const items of Object.values(checklistData)) {
+            items.forEach(i => saved[i] = true);
+        }
+        localStorage.setItem('taenggu_checklist', JSON.stringify(saved));
+        renderChecklist();
+    }
+
+    function resetChecklist() {
+        if(confirm('체크리스트를 초기화 하시겠습니까?')) {
+            localStorage.removeItem('taenggu_checklist');
+            renderChecklist();
+        }
+    }
+
+    // 5. Memo System
+    const memoArea = document.getElementById('userMemo');
+    function loadMemo() {
+        memoArea.value = localStorage.getItem('taenggu_memo') || '';
+        memoArea.addEventListener('input', (e) => {
+            localStorage.setItem('taenggu_memo', e.target.value);
+        });
+    }
+
+    // 6. Share Function
+    function copyShareLink() {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('opacity-0');
+            setTimeout(() => {
+                toast.classList.add('opacity-0');
+            }, 2000);
+        });
+    }
+  </script>
+</body>
+</html>
