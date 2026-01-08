@@ -38,7 +38,15 @@
         // --- 메인 컴포넌트 ---
         const App = () => {
             const [activeTab, setActiveTab] = useState('itinerary');
-            const [dDayLabel, setDDayLabel] = useState('');
+            
+            // D-Day 관련 상태 (객체로 관리하여 텍스트, 스타일, 서브텍스트 분리)
+            const [dDayInfo, setDDayInfo] = useState({
+                label: '',
+                subLabel: null,
+                styleClass: 'bg-red-500 border-red-400',
+                animate: true
+            });
+
             const [selectedDay, setSelectedDay] = useState(0);
             const [showVideo, setShowVideo] = useState(false);
             const [videoUrl, setVideoUrl] = useState('');
@@ -51,8 +59,9 @@
             const [userMemo, setUserMemo] = useState('');
             const [checklistState, setChecklistState] = useState({});
 
-            // 여행 시작일 설정
+            // [수정] 여행 기간 설정
             const TRAVEL_START_DATE = new Date('2025-12-20');
+            const TRAVEL_END_DATE = new Date('2025-12-26'); // 종료일 추가
 
             // 초기화 (로드 시 1회 실행)
             useEffect(() => {
@@ -62,15 +71,46 @@
                 if (savedMemo) setUserMemo(savedMemo);
                 if (savedChecklist) setChecklistState(JSON.parse(savedChecklist));
 
+                // 날짜 계산 로직 (시간 초기화하여 날짜만 비교)
                 const today = new Date();
-                const start = new Date(TRAVEL_START_DATE.getFullYear(), TRAVEL_START_DATE.getMonth(), TRAVEL_START_DATE.getDate());
-                const now = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-                const diffTime = start - now;
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                today.setHours(0, 0, 0, 0);
+                
+                const start = new Date(TRAVEL_START_DATE);
+                start.setHours(0, 0, 0, 0);
+                
+                const end = new Date(TRAVEL_END_DATE);
+                end.setHours(0, 0, 0, 0);
 
-                if (diffDays > 0) setDDayLabel(`D-${diffDays} 설렘가득!`);
-                else if (diffDays === 0) setDDayLabel('D-Day 여행시작!');
-                else setDDayLabel(`여행 ${Math.abs(diffDays) + 1}일차`);
+                // D-Day 로직 분기
+                if (today < start) {
+                    // 여행 전
+                    const diffTime = start - today;
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    setDDayInfo({
+                        label: `D-${diffDays} 설렘가득!`,
+                        subLabel: null,
+                        styleClass: 'bg-red-500 border-red-400',
+                        animate: true
+                    });
+                } else if (today >= start && today <= end) {
+                    // 여행 중
+                    const diffTime = today - start;
+                    const tripDay = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+                    setDDayInfo({
+                        label: `여행 ${tripDay}일차`,
+                        subLabel: null,
+                        styleClass: 'bg-teal-600 border-teal-500', // 여행 중엔 Teal 색상
+                        animate: true
+                    });
+                } else {
+                    // 여행 종료 후
+                    setDDayInfo({
+                        label: '모든 여정이 종료되었습니다',
+                        subLabel: '좋은 추억으로 오래 간직되길 바랍니다.',
+                        styleClass: 'bg-slate-600 border-slate-500', // 차분한 회색
+                        animate: false // 애니메이션 끔
+                    });
+                }
             }, []);
 
             // 핸들러 함수들
@@ -115,12 +155,11 @@
                 setActiveTab(tab);
                 const contentStart = document.getElementById('tab-content-start');
                 if (contentStart) {
-                    // 모바일 헤더 높이 등을 고려한 스크롤 이동
                     window.scrollTo({ top: contentStart.offsetTop - 120, behavior: 'smooth' });
                 }
             };
 
-            // 데이터 (아이콘은 FontAwesome 클래스명으로 변경)
+            // 데이터
             const tripData = [
                 {
                     day: "D1", date: "12/20 (금)", title: "나트랑 도착 & 적응",
@@ -217,10 +256,17 @@
                             </div>
 
                             <div className="relative z-10 px-6 py-10 flex flex-col items-center w-full max-w-2xl">
-                                <div className="mb-6 animate-bounce">
-                                    <span className="bg-red-500 text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-lg border border-red-400">
-                                        {dDayLabel}
-                                    </span>
+                                {/* [수정] D-Day Badge */}
+                                <div className={`mb-6 ${dDayInfo.animate ? 'animate-bounce' : ''}`}>
+                                    <div className={`${dDayInfo.styleClass} text-white text-sm font-bold px-4 py-2 rounded-xl shadow-lg border text-center`}>
+                                        <p className="text-base">{dDayInfo.label}</p>
+                                        {/* 여행 종료 시 나타나는 서브 텍스트 */}
+                                        {dDayInfo.subLabel && (
+                                            <p className="text-[11px] font-normal opacity-90 mt-1 border-t border-white/20 pt-1">
+                                                {dDayInfo.subLabel}
+                                            </p>
+                                        )}
+                                    </div>
                                 </div>
 
                                 <h1 className="text-4xl md:text-5xl font-black mb-4 leading-tight drop-shadow-2xl">
